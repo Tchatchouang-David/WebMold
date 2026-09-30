@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="static/webmold-logo.png" alt="WebMold" width="180" />
+  <img src="static/favicon.png" alt="WebMold" width="360" height="360" />
 </p>
 
 <h1 align="center">WebMold</h1>
