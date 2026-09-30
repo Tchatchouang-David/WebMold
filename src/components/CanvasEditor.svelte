@@ -199,20 +199,20 @@
 		box-sizing: border-box;
 	}
 	.webmold-selected {
-		outline: 4px solid rgb(139, 92, 246);
-		outline-offset: -1px;
+		outline: 4px solid rgb(139, 92, 246) !important;
+		outline-offset: -1px !important;
 	}
 	.webmold-hover {
-		outline: 3px solid rgba(99, 102, 241, 0.65);
-		outline-offset: -1px;
+		outline: 3px solid rgba(99, 102, 241, 0.65) !important;
+		outline-offset: -1px !important;
 		box-shadow:
 			rgba(115, 3, 3, 0.16) 0px 3px 6px,
-			rgba(86, 2, 2, 0.23) 0px 3px 6px;
+			rgba(86, 2, 2, 0.23) 0px 3px 6px !important;
 	}
 </style>
+<style id="imported-styles"></style>
 <style id="dynamic-styles"></style>
 <style id="global-class-editor-styles"></style>
-<style id="imported-styles"></style>
 </head>
 <body id="canvas"></body>
 </html>`;
