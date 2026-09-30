@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebMold — your first project template</title>
+  <meta name="description" content="WebMold turns a canvas into real HTML, CSS and JavaScript. This is the first project template — draw here, then start every other project from a blank canvas." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="mark" href="#top" aria-label="WebMold home">
+        <svg class="mark-glyph" viewBox="0 0 28 28" width="22" height="22" aria-hidden="true">
+          <path d="M4 21.5V8.2c0-.7.45-1.32 1.12-1.55l8-2.75a1.65 1.65 0 0 1 1.06 0l8 2.75A1.65 1.65 0 0 1 23.3 8.2v13.3" />
+          <path d="M4 21.5 14 25l10-3.5" />
+          <path d="M14 4.9v20.1" />
+        </svg>
+        <span>WebMold</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#code">Real code</a>
+      </nav>
+
+      <a class="btn btn-ghost" href="#top">Open the editor</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="kicker">/* loaded automatically for new accounts */</p>
+
+          <h1>
+            This is WebMold&rsquo;s first project template &mdash; the only one you&rsquo;ll ever get.
+            Every project you create after this one starts from an empty canvas.
+          </h1>
+
+          <p class="lede">
+            Drag shapes into place and WebMold writes the markup underneath them: real
+            elements, real classes, real CSS. Nothing about it is a black box &mdash; open the
+            code panel any time and read exactly what you built.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#how">Start a blank project</a>
+            <a class="btn btn-text" href="#code">Read the exported code</a>
+          </div>
+        </div>
+
+        <div class="hero-demo" role="img" aria-label="A canvas with three placed elements next to the HTML it produces">
+          <div class="demo-panel demo-canvas">
+            <div class="panel-label">canvas</div>
+            <div class="demo-stage" id="demoStage">
+              <div class="demo-block" data-target="line-1" style="--x:8%; --y:14%; --w:84%; --h:22%;">
+                <span>header</span>
+              </div>
+              <div class="demo-block" data-target="line-2" style="--x:8%; --y:42%; --w:52%; --h:34%;">
+                <span>card</span>
+              </div>
+              <div class="demo-block" data-target="line-3" style="--x:64%; --y:52%; --w:28%; --h:15%;">
+                <span>button</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pour" aria-hidden="true">
+            <svg viewBox="0 0 120 40" preserveAspectRatio="none">
+              <path id="pourPath" d="M2 20 C 40 20, 80 20, 118 20" />
+            </svg>
+          </div>
+
+          <div class="demo-panel demo-code">
+            <div class="panel-label">output.html</div>
+            <pre class="code-block"><code id="demoCode"><span class="ln" data-line="line-1">&lt;header class="hero-banner"&gt;</span>
+<span class="ln child" data-line="line-1">  &lt;h1&gt;Ready when you are&lt;/h1&gt;</span>
+<span class="ln" data-line="line-1">&lt;/header&gt;</span>
+<span class="ln" data-line="line-2">&lt;section class="card"&gt;</span>
+<span class="ln child" data-line="line-2">  &lt;p&gt;Built on the canvas.&lt;/p&gt;</span>
+<span class="ln" data-line="line-2">&lt;/section&gt;</span>
+<span class="ln" data-line="line-3">&lt;button class="cta"&gt;Get started&lt;/button&gt;</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="how" id="how">
+      <div class="wrap">
+        <h2>From an empty canvas to a page you can ship</h2>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-index">01</span>
+            <h3>Draw</h3>
+            <p>Place elements the way you'd sketch a layout on paper &mdash; sections, cards,
+              buttons, text. Each one is a real HTML node the moment you drop it.</p>
+          </li>
+          <li class="step">
+            <span class="step-index">02</span>
+            <h3>Style with real classes</h3>
+            <p>Name a class once and every element wearing it updates together, exactly like
+              editing a stylesheet by hand &mdash; because that's what you're doing.</p>
+          </li>
+          <li class="step">
+            <span class="step-index">03</span>
+            <h3>Export or keep building</h3>
+            <p>Download dependency-free HTML, CSS and JS, or save a project file you can
+              reopen and keep shaping later.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section class="capabilities" id="capabilities">
+      <div class="wrap cap-grid">
+        <div class="cap-intro">
+          <h2>Nothing here is a proprietary abstraction</h2>
+          <p>WebMold skips the framework markup and component wrappers other builders hide
+            behind. What you see on the canvas is what ends up in the file.</p>
+        </div>
+
+        <div class="cap-row">
+          <h3>Real elements, not proxies</h3>
+          <p>Every block you place is a genuine DOM node with a tag, an id and attributes you
+            can inspect &mdash; not an internal placeholder rendered into something else at export time.</p>
+        </div>
+        <div class="cap-row">
+          <h3>Classes that behave like classes</h3>
+          <p>Reuse a class across elements and edits apply everywhere it's used. Rename it,
+            delete it, or inspect the selector it authors &mdash; the same mental model as
+            hand-written CSS.</p>
+        </div>
+        <div class="cap-row">
+          <h3>Bring your own markup</h3>
+          <p>Import existing HTML, CSS and JavaScript and keep working on it visually. WebMold
+            reads your structure instead of asking you to start over.</p>
+        </div>
+        <div class="cap-row">
+          <h3>Export something you'd actually commit</h3>
+          <p>Download a standalone page, or a project file that reopens exactly where you left
+            off &mdash; no vendor lock-in either direction.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REAL CODE ============ -->
+    <section class="code-section" id="code">
+      <div class="wrap">
+        <h2>Open the code panel any time</h2>
+        <p class="section-lede">This is the actual export for a small pricing card built on
+          the canvas &mdash; not a simplified example.</p>
+
+        <div class="code-window">
+          <div class="code-tabs" role="tablist" aria-label="Exported files">
+            <button class="code-tab is-active" role="tab" aria-selected="true" data-file="html" type="button">index.html</button>
+            <button class="code-tab" role="tab" aria-selected="false" data-file="css" type="button">styles.css</button>
+            <button class="code-tab" role="tab" aria-selected="false" data-file="js" type="button">script.js</button>
+          </div>
+
+          <pre class="code-block code-window-body"><code id="exportCode" data-file="html">&lt;section class="pricing-card" id="html-14"&gt;
+  &lt;p class="pricing-eyebrow"&gt;Studio plan&lt;/p&gt;
+  &lt;h3 class="pricing-figure"&gt;$24&lt;span&gt;/mo&lt;/span&gt;&lt;/h3&gt;
+  &lt;ul class="pricing-list"&gt;
+    &lt;li&gt;Unlimited canvases&lt;/li&gt;
+    &lt;li&gt;Export to HTML, CSS, JS&lt;/li&gt;
+    &lt;li&gt;Reopen and re-edit&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button class="cta" id="html-19"&gt;Choose Studio&lt;/button&gt;
+&lt;/section&gt;</code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <p class="footer-mark">WebMold</p>
+        <p class="footer-note">This page was itself built on the canvas &mdash; canvas in, code
+          out. Once you leave this template, new projects begin empty.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#how">How it works</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#code">Real code</a>
+      </div>
+
+      <a class="btn btn-primary" href="#top">Start your first real project</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

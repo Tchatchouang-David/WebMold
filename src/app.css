@@ -1,0 +1,19 @@
+/* src/app.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.scroll-container {
+  overflow-y: auto;
+  /* Default: thumb is transparent, track is transparent */
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+}
+
+.scroll-container:hover {
+  /* Hover: thumb becomes grey, track stays transparent */
+  scrollbar-color: #888888 transparent;
+}

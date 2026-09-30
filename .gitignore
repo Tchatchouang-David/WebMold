@@ -1,0 +1,27 @@
+node_modules
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Runtime data (local SQLite file for `npm run dev` — see src/lib/server/visitors.js)
+/data/*
+!/data/.gitkeep
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
