@@ -29,9 +29,17 @@
 		margin: 0 auto;
 	}
 
+	:global(html.dark body) {
+		background-color: #020617;
+	}
+
 	h2 {
 		margin-bottom: 8px;
 		color: #1e293b;
+	}
+
+	:global(html.dark) h2 {
+		color: #f1f5f9;
 	}
 
 	.instructions {
@@ -42,5 +50,11 @@
 		border-left: 4px solid #0ea5e9;
 		font-size: 0.95rem;
 		color: #0c4a6e;
+	}
+
+	:global(html.dark) .instructions {
+		background-color: rgb(14 165 233 / 0.12);
+		border-left-color: #38bdf8;
+		color: #bae6fd;
 	}
 </style>

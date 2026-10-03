@@ -63,7 +63,7 @@
 			class:activeButton={selectedRectangleIndex.value == node.index}
 			class:selectedGroup={selectedGroup.value?.dataset.index == node.index}
 			onclick={() => highlightButtonToRectangle(node.element, node.index)}
-			class="hover:bg-[#cad5e2b7] w-full rounded-[4px] font-medium flex node relative"
+			class="hover:bg-[#cad5e2b7] w-full rounded-[4px] font-medium flex node relative dark:hover:bg-slate-700/50"
 			style="margin-left: {INDENT}px;"
 		>
 			{#if node.children.length}
@@ -82,11 +82,11 @@
 		</div>
 		<button
 			onclick={() => createGroup(node.element)}
-			class="bg-slate-100 rounded p-0.5 hover:bg-slate-300 z-50"
+			class="bg-slate-100 rounded p-0.5 hover:bg-slate-300 z-50 dark:bg-slate-800 dark:hover:bg-slate-700"
 			><img
 				src={node.type === 'element' ? '/element.svg' : '/group.svg'}
 				alt=""
-				class="w-5"
+				class="w-5 dark:brightness-[1.6]"
 			/></button
 		>
 	</main>
@@ -95,7 +95,7 @@
 		<div
 			class="w-full pr-2"
 			style="
-        border-left: 1px solid #ccc;
+        border-left: 1px solid var(--wm-tree-guide, #ccc);
         margin-left: {INDENT}px;
         padding-left: {INDENT}px;
       "
@@ -134,6 +134,21 @@
 	.hoveredButton {
 		background-color: #cad5e26f;
 		color:black;
+	}
+
+	/* `html.dark` keeps these stronger than Tailwind's own dark: utilities
+	   (e.g. dark:hover:bg-* on the row), so selection state always wins. */
+	:global(html.dark) .activeButton {
+		background-color: rgb(99 102 241 / 0.28);
+		color: #e0e7ff;
+	}
+	:global(html.dark) .hoveredButton {
+		background-color: rgb(148 163 184 / 0.18);
+		color: #f1f5f9;
+	}
+	:global(html.dark) .selectedGroup {
+		background-color: rgb(139, 92, 246);
+		color: white;
 	}
 
 	:global(.activeTag) {

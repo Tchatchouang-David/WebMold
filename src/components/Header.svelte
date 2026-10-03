@@ -44,7 +44,7 @@
 </script>
 
 <header
-	class="w-full h-10 max-h-[40px] bg-white border-b border-slate-200/90 select-none flex items-center justify-between px-3 z-50 text-xs font-semibold text-slate-700 shadow-[0_1px_2px_rgba(0,0,0,0.03)] shrink-0"
+	class="w-full h-10 max-h-[40px] bg-white border-b border-slate-200/90 select-none flex items-center justify-between px-3 z-50 text-xs font-semibold text-slate-700 shadow-[0_1px_2px_rgba(0,0,0,0.03)] shrink-0 transition-colors duration-300 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:shadow-none"
 >
 	<!-- LEFT: Brand & Project Name -->
 	<div class="flex items-center gap-2.5 min-w-0">
@@ -52,9 +52,9 @@
 			type="button"
 			onclick={() => (window.location.href = '/')}
 			title="All projects"
-			class="flex items-center gap-1.5 text-slate-900 hover:text-indigo-600 font-bold transition-colors group"
+			class="flex items-center gap-1.5 text-slate-900 hover:text-indigo-600 font-bold transition-colors group dark:text-slate-100 dark:hover:text-indigo-300"
 		>
-			<img src="/favicon.png" alt="" class="w-8">
+			<img src="/favicon.png" alt="" class="w-7 rounded-md">
 			<span>WebMold</span>
 		</button>
 
@@ -62,13 +62,13 @@
 			<span class="text-slate-400 text-xs font-bold">/</span>
 
 			<div
-				class="flex items-center gap-1.5 px-2 py-0.5 rounded-md text-slate-900 font-bold"
+				class="flex items-center gap-1.5 px-2 py-0.5 rounded-md text-slate-900 font-bold dark:text-slate-100"
 				title={activeProjectName}
 			>
 				<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
 				<button
 					onclick={() => (window.location.href = '/')}
-					class="truncate max-w-[130px] md:max-w-[200px] text-xs font-bold text-slate-900"
+					class="truncate max-w-[130px] md:max-w-[200px] text-xs font-bold text-slate-900 dark:text-slate-100"
 					>{activeProjectName}</button
 				>
 			</div>
@@ -83,11 +83,11 @@
 				showImportDialog = true;
 				//alert(showImportDialog);
 			}}
-			class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-indigo-700 hover:text-indigo-800 hover:bg-indigo-50 border  hover:border-indigo-200 transition-all text-[11px] font-bold"
+			class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-indigo-700 hover:text-indigo-800 hover:bg-indigo-50 border hover:border-indigo-200 transition-all text-[11px] font-bold dark:text-indigo-300 dark:hover:text-indigo-200 dark:border-slate-700 dark:hover:bg-indigo-500/10 dark:hover:border-indigo-400/40"
 			title="Import HTML / CSS / JS code into canvas"
 		>
 			<svg
-				class="w-3.5 h-3.5 text-indigo-600"
+				class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-300"
 				fill="none"
 				viewBox="0 0 24 24"
 				stroke="currentColor"
@@ -102,15 +102,15 @@
 			<span>Import HTML</span>
 		</button>
 
-		<div class="h-3.5 w-[1px] bg-slate-300 mx-0.5"></div>
+		<div class="h-3.5 w-[1px] bg-slate-300 mx-0.5 dark:bg-slate-700"></div>
 
 		<button
 			type="button"
 			onclick={resetCanvas}
-			class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-rose-700 hover:text-rose-800 hover:bg-rose-50 border  hover:border-rose-200 transition-all text-[11px] font-bold"
+			class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-rose-700 hover:text-rose-800 hover:bg-rose-50 border hover:border-rose-200 transition-all text-[11px] font-bold dark:text-rose-300 dark:hover:text-rose-200 dark:border-slate-700 dark:hover:bg-rose-500/10 dark:hover:border-rose-400/40"
 			title="Resets the canvas to the default ZoomFactor"
 		>
-			<svg class="w-3.5 h-3.5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<svg class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path
 					stroke-linecap="round"
 					stroke-linejoin="round"
@@ -127,7 +127,7 @@
 		<button
 			type="button"
 			onclick={exportDocumentJson}
-			class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-900 text-white shadow-sm hover:shadow transition-all text-[11px] font-bold active:scale-95"
+			class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-900 text-white shadow-sm hover:shadow transition-all text-[11px] font-bold active:scale-95 dark:bg-slate-700 dark:hover:bg-slate-600"
 			title="Export canvas layout as JSON"
 		>
 			<svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -145,7 +145,7 @@
 		<button
 			type="button"
 			onclick={exportDocumentHtml}
-			class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm hover:shadow transition-all text-[11px] font-bold active:scale-95"
+			class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm hover:shadow transition-all text-[11px] font-bold active:scale-95 dark:bg-indigo-500 dark:hover:bg-indigo-400"
 			title="Export production-ready HTML and Tailwind CSS"
 		>
 			<svg
@@ -165,15 +165,15 @@
 			<span class="sm:hidden">HTML</span>
 		</button>
 
-		<div class="h-3.5 w-[1px] bg-slate-300 mx-0.5"></div>
+		<div class="h-3.5 w-[1px] bg-slate-300 mx-0.5 dark:bg-slate-700"></div>
 
 		<button
 			type="button"
 			onclick={() => goto('/docs')}
-			class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-slate-800 hover:text-indigo-700 hover:bg-indigo-50 border border-transparent hover:border-indigo-200 transition-all text-[11px] font-bold"
+			class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-slate-800 hover:text-indigo-700 hover:bg-indigo-50 border border-transparent hover:border-indigo-200 transition-all text-[11px] font-bold dark:text-slate-200 dark:hover:text-indigo-200 dark:hover:bg-indigo-500/10 dark:hover:border-indigo-400/40"
 			title="Open WebMold documentation"
 		>
-			<svg class="w-3.5 h-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<svg class="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path
 					stroke-linecap="round"
 					stroke-linejoin="round"

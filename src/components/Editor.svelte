@@ -175,41 +175,41 @@
 	<div
 		class="w-[60rem] h-auto bottom-[1%] left-[25%] flex flex-col gap-2 absolute justify-between px-2 z-[2000]"
 	>
-		<div class="flex items-center gap-1 rounded-lg bg-white border border-slate-300 p-1 shadow-md">
+		<div class="flex items-center gap-1 rounded-lg bg-white border border-slate-300 dark:bg-slate-900 dark:border-slate-700 p-1 shadow-md">
 			<button
 				onclick={() => switchPanel('styles')}
 				class:activePanel={editorPanel.value === 'styles'}
-				class="px-4 py-1.5 rounded-md text-xs font-bold hover:bg-slate-100">Styles</button
+				class="px-4 py-1.5 rounded-md text-xs font-bold hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Styles</button
 			>
 			<button
 				onclick={() => switchPanel('classes')}
 				class:activePanel={editorPanel.value === 'classes'}
-				class="px-4 py-1.5 rounded-md text-xs font-bold hover:bg-slate-100">Classes</button
+				class="px-4 py-1.5 rounded-md text-xs font-bold hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Classes</button
 			>
 			<button
 				onclick={() => switchPanel('js')}
 				class:activePanel={editorPanel.value === 'js'}
-				class="px-4 py-1.5 rounded-md text-xs font-bold hover:bg-slate-100">JS</button
+				class="px-4 py-1.5 rounded-md text-xs font-bold hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">JS</button
 			>
 		</div>
 
 		{#if editorPanel.value === 'selectors'}
-			<div class="rounded-lg bg-white border border-slate-300 p-2 shadow-md">
-				<p class="px-1 text-[10px] text-slate-500">Editing {selectedGlobalSelector.value}</p>
+			<div class="rounded-lg bg-white border border-slate-300 dark:bg-slate-900 dark:border-slate-700 p-2 shadow-md">
+				<p class="px-1 text-[10px] text-slate-500 dark:text-slate-400">Editing {selectedGlobalSelector.value}</p>
 			</div>
 		{:else if editorPanel.value === 'classes'}
-			<div class="rounded-lg bg-white border border-slate-300 p-2 shadow-md">
+			<div class="rounded-lg bg-white border border-slate-300 dark:bg-slate-900 dark:border-slate-700 p-2 shadow-md">
 				<div class="flex items-center gap-1.5 flex-wrap">
 					<!-- drop classes indicator zone -->
 					<div
 						aria-roledescription="class drop target"
 						role="button"
 						tabindex="0"
-						class="w-fit flex flex-col items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-center transition-colors border-blue-400 bg-blue-50"
+						class="w-fit flex flex-col items-center justify-center rounded-lg border-2 border-dashed px-2 py-1 text-center transition-colors border-blue-400 bg-blue-50 dark:border-indigo-400/60 dark:bg-indigo-500/10"
 						ondragover={allowClassDrop}
 						ondrop={handleClassDrop}
 					>
-						<span class="text-xs font-semibold text-slate-500"
+						<span class="text-xs font-semibold text-slate-500 dark:text-slate-400"
 							>Drop a global class here to add +</span
 						>
 					</div>
@@ -218,21 +218,21 @@
 							<button
 								onclick={() => selectElementClass(classname)}
 								class:selectedClassChip={selectedClass.value === classname}
-								class="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-blue-100"
+								class="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-blue-100 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
 								>.{classname}</button
 							>
 						{/each}
 					{:else}
-						<span class="px-1 text-xs text-slate-400">This element has no classes.</span>
+						<span class="px-1 text-xs text-slate-400 dark:text-slate-500">This element has no classes.</span>
 					{/if}
 				</div>
 				{#if selectedClass.value}
-					<p class="mt-1 px-1 text-[10px] text-slate-500">Editing .{selectedClass.value}</p>
+					<p class="mt-1 px-1 text-[10px] text-slate-500 dark:text-slate-400">Editing .{selectedClass.value}</p>
 				{/if}
 			</div>
 		{:else if editorPanel.value === 'js'}
-			<div class="rounded-lg bg-white border border-slate-300 px-3 py-2 shadow-md">
-				<p class="text-xs font-semibold text-slate-600">Global project JavaScript</p>
+			<div class="rounded-lg bg-white border border-slate-300 dark:bg-slate-900 dark:border-slate-700 px-3 py-2 shadow-md">
+				<p class="text-xs font-semibold text-slate-600 dark:text-slate-300">Global project JavaScript</p>
 			</div>
 		{/if}
 
@@ -254,5 +254,15 @@
 	.selectedClassChip {
 		background: #dbeafe;
 		color: #1d4ed8;
+	}
+
+	/* `html.dark` keeps these stronger than Tailwind's own dark: utilities. */
+	:global(html.dark) .activePanel {
+		background: #4f46e5;
+		color: white;
+	}
+	:global(html.dark) .selectedClassChip {
+		background: rgb(99 102 241 / 0.28);
+		color: #c7d2fe;
 	}
 </style>

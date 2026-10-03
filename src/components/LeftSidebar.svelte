@@ -467,73 +467,73 @@
 		     on the real iframe in CanvasEditor, so zooming and panning do not
 		     affect the numbers displayed here. -->
 		<nav class="flex gap-3 font-semibold text-xs">
-			<button class="bg-gray-300 py-1 px-2 rounded-lg" type="button"> Canvas Properties </button>
+			<button class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-2 py-1 font-semibold text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300" type="button"> Canvas Properties </button>
 		</nav>
 
-		<div class="flex flex-col w-full">
-			<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-				<span class="font-bold text-[0.75rem]">Width:</span>
-				<span class="text-xs font-semibold text-gray-700">{canvasSize.width}px</span>
+		<div class="grid grid-cols-2 gap-2 w-full">
+			<div class="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-2 dark:border-slate-700 dark:bg-slate-800/60">
+				<span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Width</span>
+				<span class="mt-0.5 flex items-baseline gap-0.5 text-sm font-bold tabular-nums text-slate-900 dark:text-slate-100">{canvasSize.width}<span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500">px</span></span>
 			</div>
-			<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-				<span class="font-bold text-[0.75rem]">Height:</span>
-				<span class="text-xs font-semibold text-gray-700">{canvasSize.height}px</span>
+			<div class="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-2 dark:border-slate-700 dark:bg-slate-800/60">
+				<span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Height</span>
+				<span class="mt-0.5 flex items-baseline gap-0.5 text-sm font-bold tabular-nums text-slate-900 dark:text-slate-100">{canvasSize.height}<span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500">px</span></span>
 			</div>
 		</div>
 
 		<hr />
 
 		<nav class="flex gap-3 font-semibold text-xs">
-			<button class="bg-gray-300 py-1 px-2 rounded-lg" type="button"> HTML Tag Properties </button>
+			<button class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-2 py-1 font-semibold text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300" type="button"> HTML Tag Properties </button>
 		</nav>
 
 		<main class="w-full h-full flex flex-col gap-1">
-			<div class="flex flex-col w-full items-center">
+			<div class="flex flex-col w-full items-center gap-2">
 				{#if selectedElement.value}
 					<!-- ID -->
-					<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-						<span class="font-bold text-[0.75rem]">ID:</span>
+					<div class="flex flex-col w-full gap-1 p-0.5">
+						<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">ID</span>
 
 						<input
 							oninput={handleElementIDProp}
 							bind:value={selectedElementID.value}
-							class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+							class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 							type="text"
 						/>
 					</div>
 
 					<!-- Name -->
-					<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-						<span class="font-bold text-[0.75rem]">Name:</span>
+					<div class="flex flex-col w-full gap-1 p-0.5">
+						<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Name</span>
 
 						<input
 							oninput={(event) => updateDynamicElementProp('name', event)}
 							bind:value={selectedElementName.value}
-							class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+							class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 							type="text"
 						/>
 					</div>
 
 					<!-- Tag -->
-					<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-						<span class="font-bold text-[0.75rem]">Type:</span>
+					<div class="flex flex-col w-full gap-1 p-0.5">
+						<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Type</span>
 
 						<input
 							oninput={(event) => updateDynamicElementProp('type', event)}
 							bind:value={selectedElementType.value}
-							class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+							class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 							type="text"
 						/>
 					</div>
 
 					{#if ['DIV', 'P', 'SECTION', 'MAIN', 'ARTICLE', 'ASIDE', 'HEADER', 'FOOTER', 'SPAN', 'A', 'BUTTON', 'LABEL', 'LI', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(selectedElement.value.tagName)}
 						<div class="flex flex-col w-full p-0.5 gap-1">
-							<span class="font-bold text-[0.75rem]">Text content:</span>
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Text content</span>
 							<textarea
 								value={selectedElement.value.textContent || ''}
 								oninput={handleTextContentInput}
 								disabled={selectedElement.value.children.length > 0}
-								class="bg-transparent rounded border px-1.5 py-1 text-[0.85rem] border-gray-400 font-semibold text-black w-full min-h-[4rem] resize-y disabled:opacity-50"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15 min-h-[4rem] resize-y disabled:cursor-not-allowed disabled:opacity-50"
 								title={selectedElement.value.children.length > 0
 									? 'Text content is read-only for elements containing child elements.'
 									: 'Edit the text content of this element.'}
@@ -543,24 +543,24 @@
 
 					<!-- IMG -->
 					{#if selectedElement.value.tagName === 'IMG'}
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-							<span class="font-bold text-[0.75rem]">Src:</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Source</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('src', event)}
 								bind:value={selectedElementSrc}
-								class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="text"
 							/>
 						</div>
 
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-							<span class="font-bold text-[0.75rem]">Alt:</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Alt text</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('alt', event)}
 								bind:value={selectedElementAlt}
-								class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="text"
 							/>
 						</div>
@@ -568,24 +568,24 @@
 
 					<!-- INPUT -->
 					{#if selectedElement.value.tagName === 'INPUT'}
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-							<span class="font-bold text-[0.75rem]">Inp-Type:</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Input type</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('input-type', event)}
 								bind:value={selectedElementInputType}
-								class="bg-transparent rounded border pl-1.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="text"
 							/>
 						</div>
 
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-							<span class="font-bold text-[0.75rem]">Placeholder:</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Placeholder</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('placeholder', event)}
 								bind:value={selectedElementPlaceholder}
-								class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="text"
 							/>
 						</div>
@@ -593,13 +593,13 @@
 
 					<!-- TEXTAREA -->
 					{#if selectedElement.value.tagName === 'TEXTAREA'}
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-							<span class="font-bold text-[0.75rem]">Rows :</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Rows</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('row', event)}
 								bind:value={selectedElementRow}
-								class="bg-transparent rounded border pl-1.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="number"
 								min="1"
 							/>
@@ -608,13 +608,13 @@
 
 					<!-- A -->
 					{#if selectedElement.value.tagName === 'A'}
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 items-center">
-							<span class="font-bold text-[0.75rem]">Href :</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Link (href)</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('href', event)}
 								bind:value={selectedElementHref}
-								class="bg-transparent rounded border pl-1.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="text"
 							/>
 						</div>
@@ -622,19 +622,19 @@
 
 					<!-- LABEL -->
 					{#if selectedElement.value.tagName === 'LABEL'}
-						<div class="grid grid-cols-[30%_auto] w-full p-0.5 gap-3.5 items-center">
-							<span class="font-bold text-[0.75rem]">For :</span>
+						<div class="flex flex-col w-full gap-1 p-0.5">
+							<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">For (input id)</span>
 
 							<input
 								oninput={(event) => updateDynamicElementProp('for', event)}
 								bind:value={selectedElementFor}
-								class="bg-transparent rounded border pl-1.5 py-0.5 text-[0.85rem] border-gray-400 font-semibold text-black w-[8rem]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-900 placeholder-slate-400 shadow-sm outline-none transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 dark:shadow-none dark:hover:border-slate-600 dark:focus:border-indigo-400 dark:focus:bg-slate-950 dark:focus:ring-indigo-400/15"
 								type="text"
 							/>
 						</div>
 					{/if}
 				{:else}
-					<img src="/noData.svg" alt="" class="w-8 mt-5" />
+					<img src="/noData.svg" alt="" class="w-8 mt-5 dark:invert dark:opacity-60" />
 
 					<p class="font-medium my-3 text-xs">No Properties</p>
 				{/if}
@@ -642,13 +642,13 @@
 
 			<hr />
 
-			<button class="bg-gray-300 py-1 px-2 rounded-lg my-2 text-xs w-fit font-bold">
+			<button class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-2 py-1 font-semibold text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300 my-2 text-xs w-fit font-bold">
 				Element classes
 			</button>
 
 			{#if !selectedElement.value}
 				<div class="w-full flex flex-col items-center">
-					<img src="/noData.svg" alt="" class="w-8 mt-5" />
+					<img src="/noData.svg" alt="" class="w-8 mt-5 dark:invert dark:opacity-60" />
 					<p class="font-medium my-3 text-xs text-center">Select an element to manage classes</p>
 				</div>
 			{:else if elementClasses.length > 0}
@@ -659,7 +659,7 @@
 							onclick={() => handleGlobalClassClick(classname)}
 							oncontextmenu={(event) => handleElementClassContextMenu(event, classname)}
 							class:selectedClassChip={selectedClass.value === classname}
-							class="rounded-md bg-slate-100 border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-blue-50"
+							class="rounded-md bg-slate-100 border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-blue-50 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-indigo-500/15"
 							title={devMode.value
 								? `Edit .${classname} — right-click to remove from this element`
 								: `.${classname} — right-click to remove from this element`}>.{classname}</button
@@ -667,30 +667,30 @@
 					{/each}
 				</div>
 			{:else}
-				<div class="text-xs font-semibold text-slate-500 mb-2">This element has no classes</div>
+				<div class="text-xs font-semibold text-slate-500 mb-2 dark:text-slate-400">This element has no classes</div>
 			{/if}
 
 			<hr class="" />
 			<div class="flex items-center justify-between my-2">
-				<button class="bg-gray-200 py-1 px-2 rounded-lg my-2 text-xs w-fit font-bold">
+				<button class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-2 py-1 font-semibold text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300 my-2 text-xs w-fit font-bold">
 					Global classes
 				</button>
 				<button
 					type="button"
 					onclick={openAddClassModal}
-					class="text-xs font-bold text-blue-600 hover:text-blue-800">+ Add class</button
+					class="text-xs font-bold text-blue-600 hover:text-blue-800 dark:text-indigo-300 dark:hover:text-indigo-200">+ Add class</button
 				>
 			</div>
 
 			{#if allClasses.value.length === 0}
 				<div class="w-full flex flex-col items-center">
-					<img src="/noData.svg" alt="" class="w-10 mt-2" />
+					<img src="/noData.svg" alt="" class="w-10 mt-2 dark:invert dark:opacity-60" />
 					<p class="font-medium my-3 text-xs">No Global Classes Available</p>
 				</div>
 			{:else}
 				<div class="flex flex-col gap-1.5">
 					{#each allClasses.value as classData (classData.classname)}
-						<div class="rounded-lg border border-slate-200 overflow-hidden">
+						<div class="rounded-lg border border-slate-200 overflow-hidden dark:border-slate-700">
 							<div class="flex items-center gap-1">
 								<button
 									type="button"
@@ -698,7 +698,7 @@
 										event.stopPropagation();
 										toggleGlobalClass(classData.classname);
 									}}
-									class="w-7 py-1 text-xs font-bold text-slate-500 hover:bg-slate-100"
+									class="w-7 py-1 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
 									aria-label={expandedGlobalClasses[classData.classname]
 										? 'Collapse class'
 										: 'Expand class'}
@@ -714,17 +714,17 @@
 										openEditClassModal(classData.classname);
 									}}
 									class:selectedGlobalClass={selectedClass.value === classData.classname}
-									class="flex-1 text-left py-1.5 px-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 truncate cursor-grab active:cursor-grabbing"
+									class="flex-1 text-left py-1.5 px-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 truncate dark:text-slate-200 dark:hover:bg-slate-800/70 cursor-grab active:cursor-grabbing"
 									title={devMode.value ? `Edit .${classData.classname}` : `.${classData.classname}`}
 									>.{classData.classname}</button
 								>
 							</div>
 
 							{#if expandedGlobalClasses[classData.classname]}
-								<div class="border-t border-slate-200 bg-slate-50 p-2 flex flex-col gap-1">
+								<div class="border-t border-slate-200 bg-slate-50 p-2 flex flex-col gap-1 dark:border-slate-700 dark:bg-slate-950/50">
 									{#if classData.styles.length}
 										{#each classData.styles as declaration}
-											<code class="text-[10px] break-all text-slate-600">{declaration}</code>
+											<code class="text-[10px] break-all text-slate-600 dark:text-slate-300">{declaration}</code>
 										{/each}
 									{:else}
 										<span class="text-[10px] text-slate-400">No declarations</span>
@@ -739,14 +739,14 @@
 			{#if globalSelectors.value.length > 0}
 				<div class="mt-3">
 					<div class="flex items-center justify-between my-2">
-						<button class="bg-gray-200 py-1 px-2 rounded-lg my-2 text-xs w-fit font-bold">
+						<button class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-2 py-1 font-semibold text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300 my-2 text-xs w-fit font-bold">
 							Global selectors
 						</button>
-						<span class="text-xs font-bold text-blue-600 hover:text-blue-800">selectors</span>
+						<span class="text-xs font-bold text-blue-600 hover:text-blue-800 dark:text-indigo-300 dark:hover:text-indigo-200">selectors</span>
 					</div>
 					<div class="flex flex-col gap-1.5">
 						{#each globalSelectors.value as selectorData (selectorData.selector)}
-							<div class="rounded-lg border border-slate-200 overflow-hidden">
+							<div class="rounded-lg border border-slate-200 overflow-hidden dark:border-slate-700">
 								<div class="flex items-center gap-1">
 									<button
 										type="button"
@@ -754,7 +754,7 @@
 											event.stopPropagation();
 											toggleGlobalSelector(selectorData.selector);
 										}}
-										class="w-7 py-1 text-xs font-bold text-slate-500 hover:bg-slate-100"
+										class="w-7 py-1 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
 										aria-label={expandedGlobalSelectors[selectorData.selector]
 											? 'Collapse selector'
 											: 'Expand selector'}
@@ -769,16 +769,16 @@
 										}}
 										class:selectedGlobalClass={selectedGlobalSelector.value ===
 											selectorData.selector}
-										class="flex-1 text-left py-1.5 px-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 truncate"
+										class="flex-1 text-left py-1.5 px-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 truncate dark:text-slate-200 dark:hover:bg-slate-800/70"
 										title={`${selectorData.selector} — click to edit, double-click to rename/delete`}
 										><code class="truncate">{selectorData.selector}</code></button
 									>
 								</div>
 								{#if expandedGlobalSelectors[selectorData.selector]}
-									<div class="border-t border-slate-200 bg-slate-50 p-2 flex flex-col gap-1">
+									<div class="border-t border-slate-200 bg-slate-50 p-2 flex flex-col gap-1 dark:border-slate-700 dark:bg-slate-950/50">
 										{#if selectorData.styles.length}
 											{#each selectorData.styles as declaration}
-												<code class="text-[10px] break-all text-slate-600">{declaration}</code>
+												<code class="text-[10px] break-all text-slate-600 dark:text-slate-300">{declaration}</code>
 											{/each}
 										{:else}
 											<span class="text-[10px] text-slate-400">No declarations</span>
@@ -793,27 +793,27 @@
 
 			<hr class="my-3" />
 			<div class="flex items-center justify-between my-2">
-				<button class="bg-gray-200 py-1 px-2 rounded-lg text-xs w-fit font-bold">
+				<button class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-2 py-1 font-semibold text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300 text-xs w-fit font-bold">
 					Global JS
 				</button>
 				<button
 					type="button"
 					onclick={handleGlobalJsClick}
 					class:selectedGlobalClass={editorPanel.value === 'js'}
-					class="rounded px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-200"
+					class="rounded px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-200 dark:text-slate-200 dark:hover:bg-slate-700"
 					title={devMode.value ? 'Edit global JavaScript' : 'Global project JavaScript'}>JS</button
 				>
 			</div>
 			<pre
-				class="max-h-[280px] min-h-[270px] overflow-auto whitespace-pre-wrap break-words rounded-lg border border-slate-200 bg-slate-50 p-2 text-[10px] text-slate-600">{globalJs.value ||
+				class="max-h-[280px] min-h-[270px] overflow-auto whitespace-pre-wrap break-words rounded-lg border border-slate-200 bg-slate-50 p-2 text-[10px] text-slate-600 dark:border-slate-700 dark:bg-slate-950/50 dark:text-slate-300">{globalJs.value ||
 					'No global JavaScript.'}</pre>
 		</main>
 
 		{#if showClassModal}
-			<div class="fixed inset-0 z-[5000] flex items-center justify-center bg-black/40 p-4">
-				<div class="w-full max-w-sm rounded-xl bg-white border border-slate-300 shadow-2xl p-4">
+			<div class="fixed inset-0 z-[5000] flex items-center justify-center bg-black/40 p-4 backdrop-blur-[2px] dark:bg-black/60">
+				<div class="w-full max-w-sm rounded-xl bg-white border border-slate-300 shadow-2xl p-4 dark:bg-slate-900 dark:border-slate-700">
 					<div class="flex items-center justify-between mb-3">
-						<h3 class="font-bold text-slate-800">
+						<h3 class="font-bold text-slate-800 dark:text-slate-100">
 							{editingClassName
 								? 'Edit class'
 								: editingSelectorName
@@ -823,19 +823,19 @@
 						<button
 							type="button"
 							onclick={closeClassModal}
-							class="text-xl text-slate-400 hover:text-slate-700">×</button
+							class="text-xl text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200">×</button
 						>
 					</div>
-					<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700">
+					<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
 						<span>{editingSelectorName ? 'Selector' : 'Class or selector'}</span>
 						<input
 							bind:value={classModalName}
 							onkeydown={(event) => event.key === 'Enter' && saveGlobalClass()}
 							autofocus
-							class="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+							class="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-indigo-400"
 							placeholder="my-class"
 						/>
-						<div class="mt-1 text-[10px] font-medium text-slate-500">
+						<div class="mt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
 							{classifySelectorInput(classModalName)}
 						</div>
 					</label>
@@ -844,20 +844,20 @@
 							<button
 								type="button"
 								onclick={handleDeleteClassOrSelector}
-								class="mr-auto rounded-lg bg-rose-50 border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700"
+								class="mr-auto rounded-lg bg-rose-50 border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:bg-rose-500/10 dark:border-rose-400/30 dark:text-rose-300"
 								>Delete</button
 							>
 						{/if}
 						<button
 							type="button"
 							onclick={closeClassModal}
-							class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600"
+							class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
 							>Cancel</button
 						>
 						<button
 							type="button"
 							onclick={saveGlobalClass}
-							class="rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white"
+							class="rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 dark:bg-indigo-500 dark:hover:bg-indigo-400"
 							>{editingClassName || editingSelectorName ? 'Update' : 'Add'}</button
 						>
 					</div>
@@ -872,5 +872,12 @@
 	.selectedGlobalClass {
 		background-color: #dbeafe;
 		color: #1d4ed8;
+	}
+
+	/* `html.dark` keeps this stronger than Tailwind's own dark: utilities. */
+	:global(html.dark) .selectedClassChip,
+	:global(html.dark) .selectedGlobalClass {
+		background-color: rgb(99 102 241 / 0.25);
+		color: #c7d2fe;
 	}
 </style>

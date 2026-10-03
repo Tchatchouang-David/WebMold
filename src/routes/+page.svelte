@@ -134,7 +134,13 @@
 		onRenameProject={handleRenameProject}
 	/>
 {:else}
-	<div class="min-h-screen flex items-center justify-center bg-slate-100 text-sm text-slate-500">
+	<div
+		class="min-h-screen flex items-center justify-center gap-2.5 bg-slate-100 text-sm text-slate-500 dark:bg-slate-950 dark:text-slate-400"
+	>
+		<span
+			class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-indigo-600 dark:border-slate-700 dark:border-t-indigo-400"
+			aria-hidden="true"
+		></span>
 		Loading projects…
 	</div>
 {/if}

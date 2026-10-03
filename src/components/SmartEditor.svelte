@@ -498,6 +498,33 @@
 		outline: none;
 	}
 
+	/* Dark theme: the code surface sits slightly deeper than the dark chrome,
+	   and the autocomplete popup (portalled to <body>) follows the theme too.
+	   Token colours are unchanged - they already target a dark background. */
+	:global(html.dark) .editor-wrapper {
+		border-color: #334155;
+	}
+	:global(html.dark) .editor {
+		background: #0f1420;
+		box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
+	}
+	:global(html.dark) .suggestions {
+		background: #0f172a;
+		border-color: #334155;
+		box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+	}
+	:global(html.dark) .suggestions li {
+		color: #cbd5e1;
+	}
+	:global(html.dark) .suggestions li.selected,
+	:global(html.dark) .suggestions li:hover {
+		background: #1e293b;
+		color: #f8fafc;
+	}
+	:global(html.dark) .suggestions li .preview {
+		color: #64748b;
+	}
+
 	:global(.keyword) {
 		color: #9cdcfe;
 	}

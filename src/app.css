@@ -17,3 +17,75 @@
   /* Hover: thumb becomes grey, track stays transparent */
   scrollbar-color: #888888 transparent;
 }
+
+/* ------------------------------------------------------------------ */
+/* Theming (light / dark)                                              */
+/* The `dark` class on <html> is set by src/app.html (before paint) and */
+/* toggled by src/lib/js/theme.svelte.js. Tailwind `dark:` variants key */
+/* off it. Nothing here touches the canvas <iframe> - the page a user   */
+/* is designing keeps its own, independent styling.                     */
+/* ------------------------------------------------------------------ */
+
+:root {
+  /* Hierarchy-tree guide lines (RightSidebar / TreeView) */
+  --wm-tree-guide: #cbd5e1;
+}
+
+html.dark {
+  --wm-tree-guide: #334155;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  /* Native scrollbars, form controls and the caret follow the theme. */
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Light mode keeps the browser defaults it always had; dark mode gets a
+     proper page background so overscroll/short pages never flash white. */
+  body {
+    @apply dark:bg-slate-950 dark:text-slate-200;
+  }
+
+  /* Preflight gives <hr> a light-gray border; soften it in dark mode. */
+  .dark hr {
+    @apply border-slate-800;
+  }
+}
+
+.dark .scroll-container:hover {
+  scrollbar-color: #475569 transparent;
+}
+
+/* Active-state chips (RightSidebar tags/positions) paint their own gradient;
+   keep their white label in dark mode even when a `dark:text-*` utility is
+   also present on the same button. */
+html.dark .activeTag,
+html.dark .activePosition {
+  color: #fff;
+  background-color: transparent;
+}
+
+/* Smooth colour change while toggling the theme - only for the brief moment
+   the `theme-switching` class is on <html>, and never for users who ask for
+   reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease,
+      fill 0.3s ease,
+      stroke 0.3s ease,
+      box-shadow 0.3s ease,
+      opacity 0.3s ease,
+      transform 0.3s ease !important;
+  }
+}

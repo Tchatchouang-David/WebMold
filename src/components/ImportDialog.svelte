@@ -22,47 +22,47 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/40 p-4">
-	<div class="w-full max-w-4xl rounded-xl bg-white shadow-2xl border border-slate-300">
-		<div class="flex items-center justify-between border-b border-slate-200 px-5 py-3">
+<div class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/40 p-4 backdrop-blur-[2px] dark:bg-black/60">
+	<div class="w-full max-w-4xl rounded-xl bg-white shadow-2xl border border-slate-300 dark:bg-slate-900 dark:border-slate-700">
+		<div class="flex items-center justify-between border-b border-slate-200 px-5 py-3 dark:border-slate-800">
 			<div>
-				<h2 class="text-base font-bold text-slate-800">Import HTML / CSS / JS</h2>
-				<p class="text-xs text-slate-500">Paste any combination of HTML, CSS and JavaScript.</p>
+				<h2 class="text-base font-bold text-slate-800 dark:text-slate-100">Import HTML / CSS / JS</h2>
+				<p class="text-xs text-slate-500 dark:text-slate-400">Paste any combination of HTML, CSS and JavaScript.</p>
 			</div>
 			<button
 				type="button"
 				onclick={onClose}
-				class="rounded px-2 py-1 text-lg text-slate-500 hover:bg-slate-100"
+				class="rounded px-2 py-1 text-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
 				aria-label="Close import dialog">×</button
 			>
 		</div>
 
 		<div class="grid gap-4 p-5 md:grid-cols-3">
-			<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700">
+			<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
 				<span>HTML</span>
 				<textarea
 					bind:value={html}
-					class="h-72 resize-none rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none focus:border-blue-500"
+					class="h-72 resize-none rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-600 dark:focus:border-indigo-400"
 					placeholder="<div id=&quot;hero&quot; class=&quot;card&quot;>Hello</div>"
 					spellcheck="false"
 				></textarea>
 			</label>
 
-			<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700">
+			<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
 				<span>CSS</span>
 				<textarea
 					bind:value={css}
-					class="h-72 resize-none rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none focus:border-blue-500"
+					class="h-72 resize-none rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-600 dark:focus:border-indigo-400"
 					placeholder={'.card { background-color: white; padding: 1rem; }'}
 					spellcheck="false"
 				></textarea>
 			</label>
 
-			<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700">
+			<label class="flex flex-col gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
 				<span>JS</span>
 				<textarea
 					bind:value={js}
-					class="h-72 resize-none rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none focus:border-blue-500"
+					class="h-72 resize-none rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder-slate-600 dark:focus:border-indigo-400"
 					placeholder="document.querySelector('#hero')?.addEventListener('click', ...);"
 					spellcheck="false"
 				></textarea>
@@ -70,21 +70,21 @@
 		</div>
 
 		{#if error}
-			<p class="px-5 pb-2 text-xs font-semibold text-red-600">{error}</p>
+			<p class="px-5 pb-2 text-xs font-semibold text-red-600 dark:text-red-400">{error}</p>
 		{/if}
 
-		<div class="flex justify-end gap-2 border-t border-slate-200 px-5 py-3">
+		<div class="flex justify-end gap-2 border-t border-slate-200 px-5 py-3 dark:border-slate-800">
 			<button
 				type="button"
 				onclick={onClose}
-				class="rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+				class="rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
 			>
 				Cancel
 			</button>
 			<button
 				type="button"
 				onclick={submitImport}
-				class="rounded-lg bg-blue-600 px-5 py-1.5 text-sm font-semibold text-white hover:bg-blue-700"
+				class="rounded-lg bg-blue-600 px-5 py-1.5 text-sm font-semibold text-white hover:bg-blue-700 dark:bg-indigo-500 dark:hover:bg-indigo-400"
 			>
 				Import
 			</button>

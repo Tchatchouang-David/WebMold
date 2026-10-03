@@ -17,7 +17,7 @@
 			title: 'Draw Mode',
 			icon: 'M4 6h16M6 6v12m12-12v12M4 18h16',
 			items: [
-				'<strong>Draw Mode</strong> adds a 1px black border to every <code class="px-1 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700">.rectangle</code> on the canvas.',
+				'<strong>Draw Mode</strong> adds a 1px black border to every <code class="px-1 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200">.rectangle</code> on the canvas.',
 				'Use it while drawing or arranging nested elements so each rectangle remains visually distinct, especially when parent and child elements share the same background color.',
 				"The drawing border is separate from the editor's selection and hover <em>outline</em>, so those interaction highlights remain independent.",
 				'Draw Mode is a toggle next to Dev Mode and its state is persisted with the project, so reopening a project restores your previous setting.'
@@ -38,9 +38,9 @@
 			title: 'Copy, Paste & Delete',
 			icon: 'M8 8h10a2 2 0 012 2v9a2 2 0 01-2 2H8a2 2 0 01-2-2V10a2 2 0 012-2zm-2 8H5a2 2 0 01-2-2V5a2 2 0 012-2h9a2 2 0 012 2v1',
 			items: [
-				'Select any element on the canvas or from the <strong>Components</strong> section in the right sidebar, then press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 shadow-2xs">Ctrl + C</kbd> to copy the selected node.',
-				'Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 shadow-2xs">Ctrl + V</kbd> to paste the copied node into the current selected parent component.',
-				'Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 shadow-2xs">Ctrl + Delete</kbd> to delete the selected node. These shortcuts do not fire while you are editing a form field or content-editable area.'
+				'Select any element on the canvas or from the <strong>Components</strong> section in the right sidebar, then press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 shadow-2xs dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200">Ctrl + C</kbd> to copy the selected node.',
+				'Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 shadow-2xs dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200">Ctrl + V</kbd> to paste the copied node into the current selected parent component.',
+				'Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-semibold text-slate-700 shadow-2xs dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200">Ctrl + Delete</kbd> to delete the selected node. These shortcuts do not fire while you are editing a form field or content-editable area.'
 			]
 		},
 		{
@@ -101,42 +101,42 @@
 </svelte:head>
 
 <main
-	class="min-h-screen flex flex-col relative overflow-hidden font-sans bg-slate-50 text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-800"
+	class="min-h-screen flex flex-col relative overflow-hidden font-sans bg-slate-50 text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-800 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-200 dark:selection:bg-indigo-500/40 dark:selection:text-white"
 	style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;"
 >
 	<!-- Ambient subtle background lighting -->
 	<div
-		class="pointer-events-none absolute -top-48 left-1/2 -translate-x-1/2 w-[1100px] h-[480px] bg-gradient-to-b from-indigo-100/60 via-purple-50/40 to-transparent blur-3xl -z-10"
+		class="pointer-events-none absolute -top-48 left-1/2 -translate-x-1/2 w-[1100px] h-[480px] bg-gradient-to-b from-indigo-100/60 via-purple-50/40 to-transparent blur-3xl -z-10 dark:from-indigo-500/20 dark:via-purple-500/10"
 	></div>
 	<div
-		class="pointer-events-none absolute top-1/4 -right-48 w-96 h-96 rounded-full bg-blue-100/50 blur-[120px] -z-10"
+		class="pointer-events-none absolute top-1/4 -right-48 w-96 h-96 rounded-full bg-blue-100/50 blur-[120px] -z-10 dark:bg-blue-500/10"
 	></div>
 
 	<!-- Header Section -->
 	<header
-		class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl transition-all"
+		class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl transition-all dark:border-slate-800/80 dark:bg-slate-900/70"
 	>
 		<div class="mx-auto max-w-7xl px-6 py-5">
 			<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 				<div>
 					<div
-						class="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-200/70 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-700 shadow-sm"
+						class="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-200/70 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-700 shadow-sm dark:bg-indigo-500/10 dark:border-indigo-400/20 dark:text-indigo-300 dark:shadow-none"
 					>
-						<span class="h-1.5 w-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+						<span class="h-1.5 w-1.5 rounded-full bg-indigo-600 animate-pulse dark:bg-indigo-400"></span>
 						WebMold
 					</div>
-					<h1 class="mt-2 text-xl md:text-2xl font-extrabold tracking-tight text-slate-900">
+					<h1 class="mt-2 text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
 						Documentation
 					</h1>
 				</div>
 
 				<button
 					type="button"
-					class="group inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs md:text-sm font-semibold text-slate-700 shadow-sm hover:border-indigo-300 hover:text-indigo-600 hover:shadow transition-all duration-200 active:scale-95 self-start sm:self-center"
+					class="group inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs md:text-sm font-semibold text-slate-700 shadow-sm hover:border-indigo-300 hover:text-indigo-600 hover:shadow transition-all duration-200 active:scale-95 self-start sm:self-center dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:shadow-none dark:hover:border-indigo-400/60 dark:hover:text-indigo-300"
 					onclick={() => window.history.back()}
 				>
 					<svg
-						class="h-4 w-4 text-slate-400 group-hover:text-indigo-600 transition-colors"
+						class="h-4 w-4 text-slate-400 group-hover:text-indigo-600 transition-colors dark:group-hover:text-indigo-300"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -162,7 +162,7 @@
 		<aside class="md:w-72 shrink-0">
 			<div class="md:sticky md:top-24">
 				<div
-					class="mb-3 px-1 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400"
+					class="mb-3 px-1 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500"
 				>
 					<span>{sections.length} Modules</span>
 				</div>
@@ -174,15 +174,15 @@
 							type="button"
 							class="group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all duration-150 shrink-0 md:shrink border
 								{activeIndex === i
-								? 'bg-indigo-600 border-indigo-600 text-white shadow-sm'
-								: 'bg-white border-slate-200 text-slate-600 hover:border-indigo-200 hover:text-indigo-700'}"
+								? 'bg-indigo-600 border-indigo-600 text-white shadow-sm dark:bg-indigo-500 dark:border-indigo-500'
+								: 'bg-white border-slate-200 text-slate-600 hover:border-indigo-200 hover:text-indigo-700 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:border-indigo-400/50 dark:hover:text-indigo-300'}"
 							onclick={() => (activeIndex = i)}
 						>
 							<span
 								class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors
 									{activeIndex === i
 									? 'bg-white/15 text-white'
-									: 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100'}"
+									: 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-300 dark:group-hover:bg-indigo-500/20'}"
 							>
 								<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path
@@ -204,10 +204,10 @@
 		<section class="flex-1 min-w-0">
 			{#each sections as section, i}
 				{#if activeIndex === i}
-					<article class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm">
-						<div class="flex items-center gap-4 pb-5 border-b border-slate-100">
+					<article class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none">
+						<div class="flex items-center gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
 							<div
-								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50/80 text-indigo-600 shadow-sm"
+								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50/80 text-indigo-600 shadow-sm dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300 dark:shadow-none"
 							>
 								<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path
@@ -219,10 +219,10 @@
 								</svg>
 							</div>
 							<div>
-								<span class="text-[11px] font-bold uppercase tracking-wider text-indigo-600"
+								<span class="text-[11px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-300"
 									>Module {String(i + 1).padStart(2, '0')} · {section.category}</span
 								>
-								<h2 class="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900">
+								<h2 class="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
 									{section.title}
 								</h2>
 							</div>
@@ -230,8 +230,8 @@
 
 						<ul class="mt-6 space-y-4">
 							{#each section.items as item}
-								<li class="flex items-start gap-3 text-sm leading-6 text-slate-700">
-									<div class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500"></div>
+								<li class="flex items-start gap-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
+									<div class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
 									<span>{@html item}</span>
 								</li>
 							{/each}
@@ -242,9 +242,9 @@
 
 			<!-- Pro-tip Banner -->
 			<div
-				class="mt-6 rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50/90 via-indigo-50/60 to-purple-50/60 p-5 md:p-6 text-sm text-indigo-950 shadow-sm flex flex-col sm:flex-row items-start gap-4"
+				class="mt-6 rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50/90 via-indigo-50/60 to-purple-50/60 p-5 md:p-6 text-sm text-indigo-950 shadow-sm flex flex-col sm:flex-row items-start gap-4 dark:border-indigo-400/20 dark:from-indigo-500/10 dark:via-indigo-500/5 dark:to-purple-500/10 dark:text-indigo-100 dark:shadow-none"
 			>
-				<div class="p-2 rounded-xl bg-indigo-100/80 text-indigo-700 shrink-0">
+				<div class="p-2 rounded-xl bg-indigo-100/80 text-indigo-700 shrink-0 dark:bg-indigo-500/20 dark:text-indigo-300">
 					<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path
 							stroke-linecap="round"
@@ -255,7 +255,7 @@
 					</svg>
 				</div>
 				<div class="leading-relaxed text-xs md:text-sm">
-					<span class="font-bold text-indigo-900 block sm:inline">Pro Tip:</span>
+					<span class="font-bold text-indigo-900 block sm:inline dark:text-white">Pro Tip:</span>
 					Most project changes are persisted automatically to client storage. When working with imported
 					code or global styling, keep the visual hierarchy and class cascade in mind because global
 					class updates will reflect across every bound node in your project canvas.
@@ -264,7 +264,7 @@
 
 			<!-- Bottom footer stats -->
 			<div
-				class="mt-6 pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500"
+				class="mt-6 pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400"
 			>
 				<div class="flex items-center gap-2">
 					<span class="h-2 w-2 rounded-full bg-emerald-500"></span>

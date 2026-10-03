@@ -32,7 +32,8 @@
 	article {
 		color: white;
 		padding: 0.75rem 1.5rem;
-		border-radius: 0.2rem;
+		border-radius: 0.5rem;
+		box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.35);
 		display: flex;
 		align-items: center;
 		margin: 0 auto 0.5rem auto;

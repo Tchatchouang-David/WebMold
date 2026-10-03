@@ -1818,9 +1818,11 @@
 	<ImportDialog onImport={importProject} onClose={() => (showImportDialog = false)} />
 {/if}
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<main class="max-w-screen max-h-screen h-full grid grid-cols-[220px_auto_220px] bg-white">
+<main
+	class="max-w-screen max-h-screen h-full grid grid-cols-[220px_auto_220px] bg-white transition-colors duration-300 dark:bg-slate-950"
+>
 	<div
-		class="w-full h-[100vh] scroll-container transition-all duration-700 p-2 overflow-auto border-r border-r-[#bababa] text-sm bg-white text-gray-600"
+		class="w-full h-[100vh] scroll-container transition-all duration-700 p-2 overflow-auto border-r border-r-slate-200 text-sm bg-white text-gray-600 dark:border-r-slate-800 dark:bg-slate-900 dark:text-slate-300"
 	>
 		<LeftSidebar {canvasSize} />
 	</div>
@@ -1927,9 +1929,26 @@
 		   the (also white) iframe page contrast against this instead is the
 		   same solution Figma/Webflow/Framer use for their canvas. */
 		background: #e2e8f0;
+		transition: background-color 0.3s ease;
 		/* required for reliable pointer capture during drag: prevents the browser from hijacking
 		   the gesture for its own scroll/zoom/selection handling on touch and some trackpads */
 		touch-action: none;
+	}
+
+	/* Dark theme only recolours the editor's own backdrop and the frame's shadow.
+	   The iframe's page (the user's design) is intentionally left white/unchanged. */
+	:global(html.dark) .canvas-container {
+		background: #0b1120;
+	}
+	:global(html.dark) .canvas-content {
+		box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.18), 0 10px 40px rgba(0, 0, 0, 0.55);
+	}
+	:global(html.dark) .canvas-resize-handle::after {
+		background: rgba(148, 163, 184, 0.3);
+	}
+	:global(html.dark) .canvas-resize-handle:hover::after,
+	:global(html.dark) .canvas-resize-handle:active::after {
+		background: #6366f1;
 	}
 
 	/* Sizing (width/height) is set inline on the <iframe> from canvasFrameSize
