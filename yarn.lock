@@ -76,16 +76,6 @@
   dependencies:
     js-base64 "^3.7.5"
 
-"@libsql/darwin-arm64@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/darwin-arm64/-/darwin-arm64-0.5.29.tgz"
-  integrity sha512-K+2RIB1OGFPYQbfay48GakLhqf3ArcbHqPFu7EZiaUcRgFcdw8RoltsMyvbj5ix2fY0HV3Q3Ioa/ByvQdaSM0A==
-
-"@libsql/darwin-x64@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/darwin-x64/-/darwin-x64-0.5.29.tgz"
-  integrity sha512-OtT+KFHsKFy1R5FVadr8FJ2Bb1mghtXTyJkxv0trocq7NuHntSki1eUbxpO5ezJesDvBlqFjnWaYYY516QNLhQ==
-
 "@libsql/hrana-client@^0.10.0":
   version "0.10.0"
   resolved "https://registry.npmjs.org/@libsql/hrana-client/-/hrana-client-0.10.0.tgz"
@@ -102,26 +92,6 @@
     "@types/ws" "^8.5.4"
     ws "^8.13.0"
 
-"@libsql/linux-arm-gnueabihf@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/linux-arm-gnueabihf/-/linux-arm-gnueabihf-0.5.29.tgz"
-  integrity sha512-CD4n4zj7SJTHso4nf5cuMoWoMSS7asn5hHygsDuhRl8jjjCTT3yE+xdUvI4J7zsyb53VO5ISh4cwwOtf6k2UhQ==
-
-"@libsql/linux-arm-musleabihf@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/linux-arm-musleabihf/-/linux-arm-musleabihf-0.5.29.tgz"
-  integrity sha512-2Z9qBVpEJV7OeflzIR3+l5yAd4uTOLxklScYTwpZnkm2vDSGlC1PRlueLaufc4EFITkLKXK2MWBpexuNJfMVcg==
-
-"@libsql/linux-arm64-gnu@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/linux-arm64-gnu/-/linux-arm64-gnu-0.5.29.tgz"
-  integrity sha512-gURBqaiXIGGwFNEaUj8Ldk7Hps4STtG+31aEidCk5evMMdtsdfL3HPCpvys+ZF/tkOs2MWlRWoSq7SOuCE9k3w==
-
-"@libsql/linux-arm64-musl@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/linux-arm64-musl/-/linux-arm64-musl-0.5.29.tgz"
-  integrity sha512-fwgYZ0H8mUkyVqXZHF3mT/92iIh1N94Owi/f66cPVNsk9BdGKq5gVpoKO+7UxaNzuEH1roJp2QEwsCZMvBLpqg==
-
 "@libsql/linux-x64-gnu@0.5.29":
   version "0.5.29"
   resolved "https://registry.npmjs.org/@libsql/linux-x64-gnu/-/linux-x64-gnu-0.5.29.tgz"
@@ -131,11 +101,6 @@
   version "0.5.29"
   resolved "https://registry.npmjs.org/@libsql/linux-x64-musl/-/linux-x64-musl-0.5.29.tgz"
   integrity sha512-gquqwA/39tH4pFl+J9n3SOMSymjX+6kZ3kWgY3b94nXFTwac9bnFNMffIomgvlFaC4ArVqMnOZD3nuJ3H3VO1w==
-
-"@libsql/win32-x64-msvc@0.5.29":
-  version "0.5.29"
-  resolved "https://registry.npmjs.org/@libsql/win32-x64-msvc/-/win32-x64-msvc-0.5.29.tgz"
-  integrity sha512-4/0CvEdhi6+KjMxMaVbFM2n2Z44escBRoEYpR+gZg64DdetzGnYm8mcNLcoySaDJZNaBd6wz5DNdgRmcI4hXcg==
 
 "@neon-rs/load@^0.0.4":
   version "0.0.4"
@@ -200,7 +165,7 @@
   dependencies:
     import-meta-resolve "^4.1.0"
 
-"@sveltejs/kit@^2.0.0", "@sveltejs/kit@^2.16.0":
+"@sveltejs/kit@^1 || ^2", "@sveltejs/kit@^2.0.0", "@sveltejs/kit@^2.16.0":
   version "2.43.8"
   resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-2.43.8.tgz"
   integrity sha512-z21dG8W4g6XtAnK8bMpaSahtPOV6JVhghhco1+GR4H39XEgIxrjIpRoT1Js84c7TmhBzbTkVpZVVPFNNPFsXkQ==
@@ -261,6 +226,11 @@
   integrity sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==
   dependencies:
     "@types/node" "*"
+
+"@vercel/analytics@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/@vercel/analytics/-/analytics-2.0.1.tgz"
+  integrity sha512-MTQG6V9qQrt1tsDeF+2Uoo5aPjqbVPys1xvnIftXSJYG2SrwXRHnqEvVoYID7BTruDz4lCd2Z7rM1BdkUehk2g==
 
 acorn@^8.12.1, acorn@^8.14.1, acorn@^8.9.0:
   version "8.15.0"
@@ -1187,7 +1157,7 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-"svelte@^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0", "svelte@^4.0.0 || ^5.0.0-next.0", svelte@^5.0.0:
+"svelte@^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0", "svelte@^4.0.0 || ^5.0.0-next.0", svelte@^5.0.0, "svelte@>= 4":
   version "5.39.8"
   resolved "https://registry.npmjs.org/svelte/-/svelte-5.39.8.tgz"
   integrity sha512-KfZ3hCITdxIXTOvrea4nFZX2o+47HPTChKeocgj9BwJQYqWrviVCcPj4boXHF5yf8+eBKqhHY8xii//XaakKXA==
