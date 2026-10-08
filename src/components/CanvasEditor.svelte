@@ -207,7 +207,7 @@
 		outline-offset: -1px !important;
 		box-shadow:
 			rgba(115, 3, 3, 0.16) 0px 3px 6px,
-			rgba(86, 2, 2, 0.23) 0px 3px 6px !important;
+			rgba(86, 2, 2, 0.23) 0px 3px 6px ;
 	}
 </style>
 <style id="imported-styles"></style>
