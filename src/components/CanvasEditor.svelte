@@ -36,6 +36,7 @@
 		importedCssText,
 		importedHasBody,
 		globalJs,
+		importedResources,
 		globalScriptElement,
 		importedStyleSheet,
 		globalClassStyleSheet,
@@ -245,7 +246,7 @@
 				// going through a serializer first.
 				await saveProjectSnapshot(
 					$state.snapshot({
-						version: 1,
+						version: 2,
 						allCreatedRecangles: serializeAllCreatedRecangles(),
 						canvasFrameSize,
 						allClasses: allClasses.value,
@@ -253,6 +254,10 @@
 						importedCss: importedCssText.value,
 						importedHasBody: importedHasBody.value,
 						globalJs: globalJs.value,
+						// Persist the full resource descriptors so CDN URLs, module/importmap
+						// types, attributes, ordering, and head/body placement survive a
+						// browser refresh and can be recreated inside the iframe.
+						importedResources: importedResources.value,
 						devMode: devMode.value,
 						drawMode: drawMode.value
 					}),
@@ -276,6 +281,7 @@
 		importedCssText.value;
 		importedHasBody.value;
 		globalJs.value;
+		importedResources.value;
 		devMode.value;
 		drawMode.value;
 		scheduleProjectPersistence();
@@ -309,12 +315,8 @@
 		const importedStyle = WebMoldDOM.getElementById('imported-styles');
 		if (importedStyle) importedStyle.textContent = '';
 		globalJs.value = '';
-
-		if (importedScriptElement?.parentNode) {
-			importedScriptElement.parentNode.removeChild(importedScriptElement);
-		}
-		importedScriptElement = null;
-		globalScriptElement.value = null;
+		removeImportedResources();
+		importedResources.value = [];
 
 		selectedGroup.value = canvas_content.value;
 		selectedElement.value = null;
@@ -352,47 +354,163 @@
 		globalClassStyleSheet.value = classStyle.sheet;
 	}
 
-	// We check if the script has already been appended to the head, if so, we delete/remove the entire script with all its js logic
-	function removeImportedScript() {
-		if (importedScriptElement?.parentNode)
-			importedScriptElement.parentNode.removeChild(importedScriptElement);
+	// Imported scripts/resources must be recreated inside the iframe's document.
+	// Keeping the descriptors in the store rather than only keeping live DOM nodes
+	// makes the project persistence layer JSON-safe and preserves CDN/module
+	// attributes across reloads and exports.
+	let importedResourceElements = [];
+
+	function removeImportedResources() {
+		for (const element of importedResourceElements) {
+			if (element?.parentNode) element.parentNode.removeChild(element);
+		}
+		importedResourceElements = [];
 		importedScriptElement = null;
 		globalScriptElement.value = null;
 	}
 
-	function appendImportedScript(jsText) {
-		removeImportedScript();
-		if (!jsText.trim() || !WebMoldDOM.isReady()) return;
+	function setIframeElementAttributes(element, attributes = {}) {
+		for (const [name, value] of Object.entries(attributes || {})) {
+			if (!name) continue;
+			if (value === null || value === undefined) continue;
+			element.setAttribute(name, value === true ? '' : String(value));
+		}
+	}
+
+	function isModuleScript(resource) {
+		return String(resource?.attributes?.type || '').trim().toLowerCase() === 'module';
+	}
+
+	function isImportMapScript(resource) {
+		return String(resource?.attributes?.type || '').trim().toLowerCase() === 'importmap';
+	}
+
+	function isExecutableScript(resource) {
+		const type = String(resource?.attributes?.type || '').trim().toLowerCase();
+		if (!type) return true;
+		return type === 'module' || type === 'importmap' || type.includes('javascript');
+	}
+
+	function hasAttribute(attributes, name) {
+		return Object.prototype.hasOwnProperty.call(attributes || {}, name);
+	}
+
+	function isRemoteResourceUrl(value) {
+		const url = String(value || '').trim();
+		return /^(?:https?:|\/\/|data:|blob:)/i.test(url);
+	}
+
+	function waitForResourceLoad(element, description) {
+		return new Promise((resolve) => {
+			let settled = false;
+			const finish = (loaded) => {
+				if (settled) return;
+				settled = true;
+				resolve({ loaded, description });
+			};
+			element.addEventListener('load', () => finish(true), { once: true });
+			element.addEventListener('error', () => finish(false), { once: true });
+		});
+	}
+
+	async function appendImportedResources(resources = []) {
+		removeImportedResources();
+		if (!WebMoldDOM.isReady()) return { failed: [] };
 
 		const frameDoc = WebMoldDOM.document;
-		// checks if the isolated iframe DOM has already been loaded and if
-		//  in jsText, there's any code portion that relies on DOMContentLoaded
-		const replayDomContentLoaded =
-			frameDoc.readyState !== 'loading' && /\bDOMContentLoaded\b/.test(jsText);
+		const failed = [];
+		let replayDomContentLoaded = false;
 
-		// Executed inside the canvas iframe's own document/window: `document`,
-		// `window`, `document.getElementById`, etc. referenced by imported code
-		// now resolve to the sandboxed canvas, never to Webmold's real document -
-		// this is the piece Shadow DOM could not have given us for free.
-		const script = WebMoldDOM.createElement('script');
-		script.id = 'imported-project-script';
-		script.type = 'text/javascript';
-		script.textContent = jsText;
-		frameDoc.body.appendChild(script);
-		importedScriptElement = script;
-		globalScriptElement.value = script;
+		for (const resource of Array.isArray(resources) ? resources : []) {
+			if (!resource?.kind) continue;
+			const targetParent = resource.location === 'head' ? frameDoc.head : frameDoc.body;
 
-		// Imported pages are usually injected after the iframe's own
-		// DOMContentLoaded event has already fired. Replay the event for
-		// imported scripts that explicitly wait for it, so patterns like
-		// `DOMContentLoaded -> appear` continue to work when a complete landing
-		// page is pasted into Webmold.
+			if (resource.kind === 'link') {
+				const link = WebMoldDOM.createElement('link');
+				setIframeElementAttributes(link, resource.attributes || {});
+				const rel = String(link.getAttribute('rel') || '')
+					.toLowerCase()
+					.split(/\s+/)
+					.filter(Boolean);
+				const shouldAwait =
+					rel.includes('stylesheet') && Boolean(link.getAttribute('href')) && isRemoteResourceUrl(link.getAttribute('href'));
+				const loadPromise = shouldAwait
+					? waitForResourceLoad(link, String(link.getAttribute('href')))
+					: null;
+				targetParent.appendChild(link);
+				importedResourceElements.push(link);
+
+				if (loadPromise) {
+					const result = await loadPromise;
+					if (!result.loaded) failed.push(result.description);
+				}
+				continue;
+			}
+
+			if (resource.kind === 'base') {
+				const base = WebMoldDOM.createElement('base');
+				setIframeElementAttributes(base, resource.attributes || {});
+				frameDoc.head.appendChild(base);
+				importedResourceElements.push(base);
+				continue;
+			}
+
+			if (resource.kind !== 'script') continue;
+
+			const script = WebMoldDOM.createElement('script');
+			setIframeElementAttributes(script, resource.attributes || {});
+			if (!hasAttribute(resource.attributes, 'src') && resource.content) {
+				script.textContent = resource.content;
+				if (/\bDOMContentLoaded\b/.test(resource.content) && frameDoc.readyState !== 'loading') {
+					replayDomContentLoaded = true;
+				}
+			}
+
+			// Inline classic scripts execute during append; external/module scripts
+			// fire load/error later. Install the listeners before append so even a
+			// fast cached resource cannot win the race.
+			const hasSrc = Boolean(resource.attributes?.src);
+			const isAsync = hasAttribute(resource.attributes, 'async');
+			const shouldAwait =
+				isExecutableScript(resource) &&
+				!isImportMapScript(resource) &&
+				!hasAttribute(resource.attributes, 'nomodule') &&
+				(hasSrc || isModuleScript(resource)) &&
+				!isAsync;
+			const loadPromise = shouldAwait
+				? waitForResourceLoad(
+					script,
+					hasSrc ? String(resource.attributes.src) : 'inline module script'
+				)
+				: null;
+
+			targetParent.appendChild(script);
+			importedResourceElements.push(script);
+
+			if (resource.source === 'webmold-js') {
+				importedScriptElement = script;
+				globalScriptElement.value = script;
+			}
+
+			// Non-JavaScript data blobs (for example application/ld+json) are still
+			// preserved in the iframe, but they must not block the rest of the import.
+			if (!isExecutableScript(resource) || isImportMapScript(resource)) continue;
+
+			if (loadPromise) {
+				const result = await loadPromise;
+				if (!result.loaded && (!hasSrc || isRemoteResourceUrl(resource.attributes?.src))) {
+					failed.push(result.description);
+				}
+			}
+		}
+
 		if (replayDomContentLoaded) {
 			queueMicrotask(() => {
-				// triggers DOMContentLoaded events inside the iframe document
 				frameDoc.dispatchEvent(new Event('DOMContentLoaded'));
 			});
 		}
+
+		return { failed };
 	}
 
 	// Manual resize handles: drag the right edge to change width, the bottom edge to change height.
@@ -683,7 +801,36 @@
 			const importedCssSource = [embedded.css, css || '']
 				.filter((value) => value.trim())
 				.join('\n\n');
-			const importedJsSource = [embedded.js, js || ''].filter((value) => value.trim()).join('\n\n');
+			const importedResourceList = Array.isArray(embedded.resources) ? embedded.resources.map((resource) => ({
+				...resource,
+				attributes: { ...(resource.attributes || {}) }
+			})) : [];
+			const explicitJs = String(js || '');
+			if (explicitJs.trim()) {
+				importedResourceList.push({
+					kind: 'script',
+					location: 'body',
+					attributes: { type: 'text/javascript' },
+					content: explicitJs,
+					source: 'webmold-js'
+				});
+			} else {
+				const classicInlineScripts = importedResourceList.filter(
+					(resource) =>
+						resource?.kind === 'script' &&
+						!resource.attributes?.src &&
+						(() => {
+							const type = String(resource.attributes?.type || '').trim().toLowerCase();
+							return !type || type.includes('javascript');
+						})()
+				);
+				// The old WebMold JS panel represented a single inline classic
+				// script as editable global JS. Preserve that UX without flattening
+				// module/importmap scripts or multiple independent scripts.
+				if (classicInlineScripts.length === 1) {
+					classicInlineScripts[0].source = 'webmold-js';
+				}
+			}
 			await WebMoldDOM.ready();
 			const parsedHtml = parseImportedHtml(html || '');
 			const hasImportedBody = Boolean(parsedHtml.hasBody);
@@ -694,7 +841,7 @@
 			template.innerHTML = parsedHtml.html;
 
 			const importedElements = Array.from(template.content.children);
-			if (!importedElements.length && !css.trim() && !js.trim()) {
+			if (!importedElements.length && !css.trim() && !js.trim() && !importedCssSource.trim() && !importedResourceList.length) {
 				throw new Error('The HTML textarea does not contain an importable element.');
 			}
 
@@ -725,7 +872,10 @@
 			// rewritten copy.
 			importedCssText.value = importedCssSource;
 			importedHasBody.value = hasImportedBody;
-			globalJs.value = importedJsSource;
+			globalJs.value = explicitJs.trim()
+				? explicitJs
+				: importedResourceList.find((resource) => resource?.source === 'webmold-js' && !resource.attributes?.src)?.content || '';
+			importedResources.value = importedResourceList;
 
 			canvas_content.value.innerHTML = '';
 			const usedIds = new Set(['canvas']);
@@ -743,9 +893,17 @@
 			}
 
 			const bodyClasses = applyBodyAttributes(parsedHtml.bodyAttributes);
+
+			// Recreate authored external/inline resources only after the DOM exists.
+			// This is what lets an imported body use a CDN library while still keeping
+			// the whole project inside the iframe's isolated document. Resource order
+			// is preserved, so an importmap can be installed before a module script.
+			const resourceResult = await appendImportedResources(importedResourceList);
+
 			// One-time measurement (not reactive - see canvasFrameSize above),
 			// so an imported page starts at a size that actually fits what it
-			// imported, rather than the bare viewport default.
+			// imported, rather than the bare viewport default. External stylesheets
+			// are awaited by appendImportedResources before this measurement.
 			canvasFrameSize = measureImportedCanvasFrameSize();
 
 			allCreatedRecangles.value = [
@@ -773,9 +931,17 @@
 			}
 
 			syncAllGlobalClassRules();
-			appendImportedScript(importedJsSource);
 			showImportDialog = false;
-			addToast({ message: 'Project imported successfully', type: 'success', dismissible, timeout });
+			if (resourceResult.failed.length) {
+				addToast({
+					message: `Project imported, but ${resourceResult.failed.length} external resource${resourceResult.failed.length === 1 ? '' : 's'} failed to load.`,
+					type: 'error',
+					dismissible,
+					timeout: 4500
+				});
+			} else {
+				addToast({ message: 'Project imported successfully', type: 'success', dismissible, timeout });
+			}
 		} catch (error) {
 			console.error('Import failed:', error);
 			addToast({
@@ -1549,12 +1715,27 @@
 		devMode.value = Boolean(snapshot.devMode);
 		drawMode.value = Boolean(snapshot.drawMode);
 
-		const js = typeof snapshot.globalJs === 'string' ? snapshot.globalJs : '';
-		globalJs.value = js;
+		const legacyJs = typeof snapshot.globalJs === 'string' ? snapshot.globalJs : '';
+		const savedResources = Array.isArray(snapshot.importedResources)
+			? snapshot.importedResources
+				.map((resource) => ({
+					...resource,
+					attributes: { ...(resource.attributes || {}) }
+				}))
+			: legacyJs.trim()
+				? [{
+						kind: 'script',
+						attributes: { type: 'text/javascript' },
+						content: legacyJs,
+						source: 'webmold-js'
+					}]
+				: [];
+		globalJs.value = legacyJs;
+		importedResources.value = savedResources;
 
 		for (const node of restoredChildren) renderImportedNodeRules(node);
 		syncAllGlobalClassRules();
-		appendImportedScript(js);
+		await appendImportedResources(savedResources);
 
 		selectedGroup.value = canvas_content.value;
 		selectedElement.value = null;

@@ -79,6 +79,10 @@ export const importedCssText = boxed('');
 // converted into the editor's .starterWrapper section.
 export const importedHasBody = boxed(false);
 export const globalJs = boxed('');
+// Ordered dependency/script descriptors extracted from the imported document.
+// Keeping the original element attributes here lets the iframe recreate CDN,
+// module, importmap, and other authored <script> tags without flattening them.
+export const importedResources = boxed([]);
 export const globalScriptElement = boxed(null);
 export const importedStyleSheet = boxed(null);
 export const globalClassStyleSheet = boxed(null);
@@ -560,15 +564,44 @@ export function listClassStyles(classname) {
 export function setGlobalJs(value) {
 	const code = String(value ?? '');
 	globalJs.value = code;
+	const currentResources = importedResources.value;
+	const currentIndex = currentResources.findIndex(
+		(resource) => resource?.kind === 'script' && resource?.source === 'webmold-js'
+	);
+
+	if (currentIndex !== -1) {
+		const nextResources = [...currentResources];
+		if (code.trim()) {
+			nextResources[currentIndex] = {
+				...nextResources[currentIndex],
+				content: code,
+				attributes: { ...(nextResources[currentIndex].attributes || {}) }
+			};
+		} else {
+			nextResources.splice(currentIndex, 1);
+		}
+		importedResources.value = nextResources;
+	}
+
 	const script = globalScriptElement.value;
 	if (script?.parentNode) {
 		// The script belongs to the canvas iframe's document (see
-		// CanvasEditor.svelte's appendImportedScript), so its replacement must
+		// CanvasEditor.svelte's appendImportedResources), so its replacement must
 		// be created there too - a node made with the host `document` can't be
 		// inserted into a different document's tree.
+		if (!code.trim()) {
+			script.parentNode.removeChild(script);
+			globalScriptElement.value = null;
+			return;
+		}
+
+		const resource = importedResources.value[currentIndex];
 		const replacement = WebMoldDOM.createElement('script');
-		replacement.id = 'imported-project-script';
-		replacement.type = 'text/javascript';
+		for (const [name, value] of Object.entries(resource?.attributes || {})) {
+			if (value === null || value === undefined) continue;
+			replacement.setAttribute(name, value === true ? '' : String(value));
+		}
+		if (!replacement.id) replacement.id = 'imported-project-script';
 		replacement.textContent = code;
 		script.parentNode.replaceChild(replacement, script);
 		globalScriptElement.value = replacement;

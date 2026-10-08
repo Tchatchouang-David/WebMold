@@ -305,9 +305,17 @@ function isElementNode(node) {
 	return node && node.type === 'tag' && typeof node.name === 'string';
 }
 
+function isResourceNode(node) {
+	if (!node) return false;
+	if (node.type === 'script' || node.type === 'style') return true;
+	if (!isElementNode(node)) return false;
+	const name = node.name.toLowerCase();
+	return name === 'link' || name === 'base';
+}
+
 function cloneWithoutScriptAndStyle(node) {
 	if (!node) return null;
-	if (node.type === 'script' || node.type === 'style') return null;
+	if (isResourceNode(node)) return null;
 	if (isElementNode(node)) {
 		return {
 			...node,
@@ -315,6 +323,41 @@ function cloneWithoutScriptAndStyle(node) {
 		};
 	}
 	return node;
+}
+
+function getNodeText(node) {
+	return (node?.children || []).map((child) => child.data || '').join('');
+}
+
+function cloneNodeAttributes(node) {
+	return Object.fromEntries(
+		Object.entries(node?.attribs || {}).map(([name, value]) => [name, value ?? ''])
+	);
+}
+
+function createScriptResource(node, location = 'body') {
+	return {
+		kind: 'script',
+		location,
+		attributes: cloneNodeAttributes(node),
+		content: node.attribs?.src ? '' : getNodeText(node)
+	};
+}
+
+function createLinkResource(node, location = 'head') {
+	return {
+		kind: 'link',
+		location,
+		attributes: cloneNodeAttributes(node)
+	};
+}
+
+function createBaseResource(node, location = 'head') {
+	return {
+		kind: 'base',
+		location,
+		attributes: cloneNodeAttributes(node)
+	};
 }
 
 function findBody(ast) {
@@ -336,28 +379,57 @@ export function extractEmbeddedAssets(htmlText = '') {
 	const ast = parseDocument(htmlText, { decodeEntities: false });
 	const cssBlocks = [];
 	const jsBlocks = [];
+	const resources = [];
 
-	function visit(node) {
+	function visit(node, location = 'body') {
 		if (!node) return;
 
 		if (node.type === 'style') {
-			cssBlocks.push((node.children || []).map((child) => child.data || '').join(''));
+			cssBlocks.push(getNodeText(node));
 			return;
 		}
 
-		if (node.type === 'script' && !node.attribs?.src) {
-			jsBlocks.push((node.children || []).map((child) => child.data || '').join(''));
+		if (node.type === 'script') {
+			const resource = createScriptResource(node, location);
+			resources.push(resource);
+			const scriptType = String(resource.attributes.type || '').trim().toLowerCase();
+			const isClassicInline = !resource.attributes.src && (!scriptType || scriptType.includes('javascript'));
+			if (isClassicInline && resource.content.trim()) jsBlocks.push(resource.content);
 			return;
 		}
 
-		for (const child of node.children || []) visit(child);
+		if (node.type === 'tag' && node.name?.toLowerCase() === 'link' && node.attribs?.href) {
+			resources.push(createLinkResource(node, location));
+			return;
+		}
+
+		if (node.type === 'tag' && node.name?.toLowerCase() === 'base') {
+			resources.push(createBaseResource(node, location));
+			return;
+		}
+
+		if (node.type === 'tag' && node.name?.toLowerCase() === 'head') {
+			for (const child of node.children || []) visit(child, 'head');
+			return;
+		}
+
+		if (node.type === 'tag' && node.name?.toLowerCase() === 'body') {
+			for (const child of node.children || []) visit(child, 'body');
+			return;
+		}
+
+		for (const child of node.children || []) visit(child, location);
 	}
 
-	for (const node of ast.children || []) visit(node);
+	for (const node of ast.children || []) visit(node, 'body');
 
 	return {
 		css: cssBlocks.filter((value) => value.trim()).join('\n\n'),
-		js: jsBlocks.filter((value) => value.trim()).join('\n\n')
+		// Kept for callers outside the current CanvasEditor pipeline that still
+		// expect the old aggregate inline-JS field. The complete, attribute-aware
+		// representation is `resources` below.
+		js: jsBlocks.filter((value) => value.trim()).join('\n\n'),
+		resources
 	};
 }
 

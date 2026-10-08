@@ -76,6 +76,16 @@
   dependencies:
     js-base64 "^3.7.5"
 
+"@libsql/darwin-arm64@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/darwin-arm64/-/darwin-arm64-0.5.29.tgz"
+  integrity sha512-K+2RIB1OGFPYQbfay48GakLhqf3ArcbHqPFu7EZiaUcRgFcdw8RoltsMyvbj5ix2fY0HV3Q3Ioa/ByvQdaSM0A==
+
+"@libsql/darwin-x64@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/darwin-x64/-/darwin-x64-0.5.29.tgz"
+  integrity sha512-OtT+KFHsKFy1R5FVadr8FJ2Bb1mghtXTyJkxv0trocq7NuHntSki1eUbxpO5ezJesDvBlqFjnWaYYY516QNLhQ==
+
 "@libsql/hrana-client@^0.10.0":
   version "0.10.0"
   resolved "https://registry.npmjs.org/@libsql/hrana-client/-/hrana-client-0.10.0.tgz"
@@ -92,6 +102,26 @@
     "@types/ws" "^8.5.4"
     ws "^8.13.0"
 
+"@libsql/linux-arm-gnueabihf@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/linux-arm-gnueabihf/-/linux-arm-gnueabihf-0.5.29.tgz"
+  integrity sha512-CD4n4zj7SJTHso4nf5cuMoWoMSS7asn5hHygsDuhRl8jjjCTT3yE+xdUvI4J7zsyb53VO5ISh4cwwOtf6k2UhQ==
+
+"@libsql/linux-arm-musleabihf@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/linux-arm-musleabihf/-/linux-arm-musleabihf-0.5.29.tgz"
+  integrity sha512-2Z9qBVpEJV7OeflzIR3+l5yAd4uTOLxklScYTwpZnkm2vDSGlC1PRlueLaufc4EFITkLKXK2MWBpexuNJfMVcg==
+
+"@libsql/linux-arm64-gnu@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/linux-arm64-gnu/-/linux-arm64-gnu-0.5.29.tgz"
+  integrity sha512-gURBqaiXIGGwFNEaUj8Ldk7Hps4STtG+31aEidCk5evMMdtsdfL3HPCpvys+ZF/tkOs2MWlRWoSq7SOuCE9k3w==
+
+"@libsql/linux-arm64-musl@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/linux-arm64-musl/-/linux-arm64-musl-0.5.29.tgz"
+  integrity sha512-fwgYZ0H8mUkyVqXZHF3mT/92iIh1N94Owi/f66cPVNsk9BdGKq5gVpoKO+7UxaNzuEH1roJp2QEwsCZMvBLpqg==
+
 "@libsql/linux-x64-gnu@0.5.29":
   version "0.5.29"
   resolved "https://registry.npmjs.org/@libsql/linux-x64-gnu/-/linux-x64-gnu-0.5.29.tgz"
@@ -101,6 +131,11 @@
   version "0.5.29"
   resolved "https://registry.npmjs.org/@libsql/linux-x64-musl/-/linux-x64-musl-0.5.29.tgz"
   integrity sha512-gquqwA/39tH4pFl+J9n3SOMSymjX+6kZ3kWgY3b94nXFTwac9bnFNMffIomgvlFaC4ArVqMnOZD3nuJ3H3VO1w==
+
+"@libsql/win32-x64-msvc@0.5.29":
+  version "0.5.29"
+  resolved "https://registry.npmjs.org/@libsql/win32-x64-msvc/-/win32-x64-msvc-0.5.29.tgz"
+  integrity sha512-4/0CvEdhi6+KjMxMaVbFM2n2Z44escBRoEYpR+gZg64DdetzGnYm8mcNLcoySaDJZNaBd6wz5DNdgRmcI4hXcg==
 
 "@neon-rs/load@^0.0.4":
   version "0.0.4"

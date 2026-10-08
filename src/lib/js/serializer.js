@@ -190,6 +190,7 @@ export function serializeDocument(tree, styleSheet, options = {}) {
 		// something a reload needs to find and unwrap.
 		importedHasBody: Boolean(options.hasBody),
 		importedJs: options.importedJs || '',
+		importedResources: Array.isArray(options.importedResources) ? options.importedResources : [],
 		elements: nodes.map((node) => serializeNode(node, styleSheet)).filter(Boolean)
 	};
 }
@@ -266,6 +267,25 @@ function collectDocumentCss(tree) {
 	return rules.join('\n');
 }
 
+/** Serialize imported head resources without flattening script types or attributes. */
+function serializeImportedResource(resource) {
+	if (!resource?.kind) return '';
+
+	const attributes = resource.attributes || {};
+	const attributeString = Object.entries(attributes)
+		.filter(([name, value]) => name && value !== null && value !== undefined)
+		.map(([name, value]) => ` ${name}="${escapeHtml(value === true ? '' : value)}"`)
+		.join('');
+
+	if (resource.kind === 'link') return `<link${attributeString}>`;
+	if (resource.kind === 'base') return `<base${attributeString}>`;
+	if (resource.kind === 'script') {
+		const content = resource.content || '';
+		return `<script${attributeString}>${content}<\/script>`;
+	}
+	return '';
+}
+
 /**
  * Produce a standalone HTML document from the current visual document.
  *
@@ -328,19 +348,41 @@ export function serializeHtml(tree, styleSheet, options = {}) {
 		.map(([name, value]) => ` ${name}="${escapeHtml(value)}"`)
 		.join('');
 
+	const hasImportedResourceArray = Array.isArray(options.importedResources);
+	const importedResources = hasImportedResourceArray ? options.importedResources : [];
+	const headResourcesHtml = importedResources
+		.filter((resource) => resource?.location !== 'body')
+		.map(serializeImportedResource)
+		.filter(Boolean)
+		.map((resource) => `  ${resource}`)
+		.join('\n');
+	const bodyResourcesHtml = importedResources
+		.filter((resource) => resource?.location === 'body')
+		.map(serializeImportedResource)
+		.filter(Boolean)
+		.map((resource) => `  ${resource}`)
+		.join('\n');
+
+	// Backward compatibility for callers that only provide the legacy importedJs
+	// string. New project snapshots/export calls provide importedResources.
+	const legacyJsHtml = !hasImportedResourceArray && options.importedJs
+		? `  <script>\n${options.importedJs}\n  <\/script>`
+		: '';
+
 	return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exported Website</title>
+${headResourcesHtml}
   <style>
 ${css}
   </style>
 </head>
 <body${bodyAttributeString}>
 ${bodyHtml}
-${options.importedJs ? `  <script>\n${options.importedJs}\n  <\/script>` : ''}
+${bodyResourcesHtml}${legacyJsHtml ? `\n${legacyJsHtml}` : ''}
 </body>
 </html>`;
 }

@@ -5,7 +5,8 @@
 		allClasses,
 		importedCssText,
 		importedHasBody,
-		globalJs
+		globalJs,
+		importedResources
 	} from '$lib/js/store.svelte';
 	import { goto } from '$app/navigation';
 	import { serializeDocument, serializeHtml, downloadTextFile } from '$lib/js/serializer';
@@ -20,7 +21,8 @@
 			importedCss: importedCssText.value,
 			hasBody: importedHasBody.value,
 			globalJs: globalJs.value,
-			importedJs: globalJs.value
+			importedJs: globalJs.value,
+			importedResources: importedResources.value
 		});
 		const json = JSON.stringify(documentData, null, 2);
 		downloadTextFile(json, 'visual-web-document.json', 'application/json');
@@ -37,7 +39,8 @@
 			importedCss: importedCssText.value,
 			hasBody: importedHasBody.value,
 			globalJs: globalJs.value,
-			importedJs: globalJs.value
+			importedJs: globalJs.value,
+			importedResources: importedResources.value
 		});
 		downloadTextFile(html, 'visual-web-document.html', 'text/html;charset=utf-8');
 	}
