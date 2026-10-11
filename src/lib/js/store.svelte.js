@@ -167,6 +167,33 @@ export function syncNodeStyleRule(node) {
 }
 
 /**
+ * Preserve the exact sequence of direct text/comment/element children.
+ * The logical editor tree tracks elements only, but imported HTML can interleave
+ * text with elements (for example, <h1>Aurora<br>Knot</h1>). Storing this sequence
+ * prevents refresh from dropping or reordering the text nodes around <br>.
+ */
+function serializeContentNodes(element, logicalChildren = []) {
+	const serializableChildren = logicalChildren.filter((child) => isElement(child?.element));
+	const childIndexes = new Map(
+		serializableChildren.map((child, index) => [child.element, index])
+	);
+
+	return Array.from(element.childNodes || []).flatMap((child) => {
+		if (child.nodeType === 3) {
+			return [{ type: 'text', textContent: child.nodeValue ?? '' }];
+		}
+		if (child.nodeType === 8) {
+			return [{ type: 'comment', textContent: child.nodeValue ?? '' }];
+		}
+		if (child.nodeType === 1) {
+			const childIndex = childIndexes.get(child);
+			return childIndex === undefined ? [] : [{ type: 'element', childIndex }];
+		}
+		return [];
+	});
+}
+
+/**
  * Convert the live editor tree into a JSON-safe representation.
  *
  * `allCreatedRecangles` remains the single in-memory editor model. The DOM
@@ -204,6 +231,7 @@ export function serializeAllCreatedRecangles(tree = allCreatedRecangles.value) {
 			styles: normalizeStyleArray(node.styles || []),
 			classes: Array.isArray(node.classes) ? [...node.classes] : [],
 			textContent: hasElementChildren ? '' : element.textContent || '',
+			contentNodes: serializeContentNodes(element, node.children || []),
 			children: (node.children || []).map(serializeNode).filter(Boolean)
 		};
 		//For form fields, extra options shall be taken into consideration in the serialized object

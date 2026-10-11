@@ -119,6 +119,32 @@ function normalizeStyleDeclaration(styleDecl, positioning) {
 }
 
 /**
+ * Preserve the original ordering of direct text/comment/element child nodes.
+ * The logical tree tracks only elements, so this metadata is needed for mixed
+ * content such as <h1>Aurora<br>Knot</h1> to survive persistence and JSON export.
+ */
+function serializeContentNodes(element, logicalChildren = []) {
+	const serializableChildren = logicalChildren.filter((child) => isElement(child?.element));
+	const childIndexes = new Map(
+		serializableChildren.map((child, index) => [child.element, index])
+	);
+
+	return Array.from(element.childNodes || []).flatMap((child) => {
+		if (child.nodeType === 3) {
+			return [{ type: 'text', textContent: child.nodeValue ?? '' }];
+		}
+		if (child.nodeType === 8) {
+			return [{ type: 'comment', textContent: child.nodeValue ?? '' }];
+		}
+		if (child.nodeType === 1) {
+			const childIndex = childIndexes.get(child);
+			return childIndex === undefined ? [] : [{ type: 'element', childIndex }];
+		}
+		return [];
+	});
+}
+
+/**
  * Extract one element into a DOM-free serializable node.
  *
  * `parentId` is stored explicitly so the document remains understandable
@@ -155,6 +181,7 @@ export function serializeNode(node, styleSheet) {
 		classes: [...(node.classes || [])],
 		cssText: normalizedCssText,
 		textContent,
+		contentNodes: serializeContentNodes(element, node.children || []),
 		children: childNodes
 	};
 }

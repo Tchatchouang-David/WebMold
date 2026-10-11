@@ -1568,10 +1568,6 @@
 			if (classname) element.classList.add(classname);
 		}
 
-		if (!element.children.length && typeof snapshotNode.textContent === 'string') {
-			element.textContent = snapshotNode.textContent;
-		}
-
 		if ('value' in snapshotNode && isFormField(element)) {
 			element.value = snapshotNode.value ?? '';
 		}
@@ -1600,7 +1596,29 @@
 			);
 			if (!childNode) continue;
 			node.children.push(childNode);
-			element.appendChild(childNode.element);
+		}
+
+		// Rebuild direct DOM child nodes in their authored order. Text nodes are
+		// not separate editor-tree nodes, so a textContent + children-only model
+		// loses mixed content such as <h1>Aurora<br>Knot</h1> on refresh.
+		if (Array.isArray(snapshotNode.contentNodes)) {
+			for (const contentNode of snapshotNode.contentNodes) {
+				if (contentNode?.type === 'text') {
+					element.appendChild(WebMoldDOM.document.createTextNode(contentNode.textContent ?? ''));
+				} else if (contentNode?.type === 'comment') {
+					element.appendChild(WebMoldDOM.document.createComment(contentNode.textContent ?? ''));
+				} else if (contentNode?.type === 'element') {
+					const childNode = node.children[contentNode.childIndex];
+					if (childNode?.element) element.appendChild(childNode.element);
+				}
+			}
+		} else {
+			// Backwards compatibility with snapshots created before contentNodes
+			// was introduced. Those snapshots only retained text for leaf elements.
+			if (!node.children.length && typeof snapshotNode.textContent === 'string') {
+				element.textContent = snapshotNode.textContent;
+			}
+			for (const childNode of node.children) element.appendChild(childNode.element);
 		}
 
 		return node;
